@@ -30,6 +30,7 @@ dependencies {
     implementation("software.amazon.awssdk:s3")
     implementation("io.micronaut:micronaut-http-client")
     runtimeOnly("ch.qos.logback:logback-classic")
+    runtimeOnly("org.slf4j:jcl-over-slf4j:1.7.28")
 }
 
     nativeImage{

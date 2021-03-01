@@ -16,6 +16,7 @@
 package micronaut.example;
 
 import io.micronaut.context.annotation.Parameter;
+import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -30,6 +31,7 @@ import java.util.stream.Collectors;
 @Controller("/s3/buckets")
 public class S3BucketController {
 
+    @ReflectiveAccess
     @Inject
     private S3Client s3Client;
 
