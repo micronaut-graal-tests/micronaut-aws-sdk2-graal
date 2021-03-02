@@ -33,12 +33,6 @@ dependencies {
     runtimeOnly("org.slf4j:jcl-over-slf4j:1.7.28")
 }
 
-    nativeImage{
-        args("--native-image-info", "--verbose")
-    }
-
-
-
 application {
     mainClass.set("micronaut.example.Application")
 }

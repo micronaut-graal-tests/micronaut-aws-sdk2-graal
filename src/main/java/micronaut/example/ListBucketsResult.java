@@ -27,7 +27,7 @@ public class ListBucketsResult extends Result{
     private List<String> buckets;
 
     public ListBucketsResult(String requestId, @NotNull @NotBlank String status, List<String> buckets) {
-        super(requestId, status);
+        super(requestId, status, null);
         this.buckets = buckets;
     }
 

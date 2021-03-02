@@ -1,5 +1,14 @@
-# Micronaut application AWS SDKv2 GraalVM
+# Micronaut AWS S3 GraalVM
 
-:warning: **The master branch is not used anymore**. Checkout branches for each specific Micronaut minor version and SDK client : `2.3.x_s3`, `2.4.x_s3`...
+Test application for Micronaut AWS SDKv2 and GraalVM that uses S3 client.
 
+To test the application:
 
+1. Build application `./gradlew nativeImage`
+2. Setup AWS credentials
+3. Call api:
+
+```
+curl -X POST localhost:8080/s3/buckets/someuniquebucketname
+curl -X GET localhost:8080/s3/buckets
+```

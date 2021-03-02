@@ -17,11 +17,11 @@ package micronaut.example;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.http.HttpStatus;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import software.amazon.awssdk.core.exception.SdkException;
+import software.amazon.awssdk.regions.providers.AwsRegionProviderChain;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
@@ -33,21 +33,29 @@ public class S3BucketController {
 
     @ReflectiveAccess
     @Inject
+    private AwsRegionProviderChain awsRegionProviderChain;
+
+    @ReflectiveAccess
+    @Inject
     private S3Client s3Client;
 
-    @Post("/buckets/{bucketName}")
+    @Post("/{bucketName}")
     public Result createBucket(@Parameter String bucketName) {
         try {
             CreateBucketRequest createBucketRequest = CreateBucketRequest.builder()
                     .bucket(bucketName)
+                    .createBucketConfiguration(CreateBucketConfiguration.builder()
+                            .locationConstraint(awsRegionProviderChain.getRegion().toString())
+                            .build())
                     .build();
             CreateBucketResponse response = s3Client.createBucket(createBucketRequest);
             return new Result(response.responseMetadata().requestId(),
-                    String.valueOf(response.sdkHttpResponse().statusCode()));
+                    String.valueOf(response.sdkHttpResponse().statusCode()),
+                    response.location());
         } catch (S3Exception s3Exception) {
-            return new Result(s3Exception.requestId(), String.valueOf(s3Exception.statusCode()));
+            return new Result(s3Exception.requestId(), String.valueOf(s3Exception.statusCode()), s3Exception.getMessage());
         } catch (SdkException sdkException) {
-            return new Result("N/A", sdkException.getMessage());
+            return new Result("N/A", sdkException.getMessage(), sdkException.getLocalizedMessage());
         }
     }
 
