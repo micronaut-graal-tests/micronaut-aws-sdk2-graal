@@ -31,7 +31,7 @@ public class Result {
 
     private final String message;
 
-    public Result(String requestId, @NotNull @NotBlank String status, String message) {
+    public Result(@NotNull @NotBlank String requestId, @NotNull @NotBlank String status, String message) {
         this.requestId = requestId;
         this.status = status;
         this.message = message;
