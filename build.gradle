@@ -4,13 +4,11 @@ plugins {
 }
 
 version = "0.1"
-group = "com.example"
+group = "example.micronaut"
 
 repositories {
     mavenCentral()
-    jcenter()
-    maven { url "https://oss.jfrog.org/oss-snapshot-local" }
-    mavenLocal()
+    maven { url "https://s01.oss.sonatype.org/content/repositories/snapshots/" }
 }
 
 micronaut {
@@ -18,7 +16,19 @@ micronaut {
     testRuntime("junit5")
     processing {
         incremental(true)
-        annotations("micronaut.example.*")
+        annotations("example.micronaut.*")
+    }
+}
+
+configurations {
+    all {
+        resolutionStrategy {
+            eachDependency { DependencyResolveDetails details ->
+                if (details.requested.group == 'io.micronaut.aws') {
+                    details.useVersion micronautAwsVersion
+                }
+            }
+        }
     }
 }
 
@@ -26,21 +36,19 @@ dependencies {
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut:micronaut-runtime")
     implementation("javax.annotation:javax.annotation-api")
-    implementation("io.micronaut.aws:micronaut-aws-sdk-v2:${micronautAwsVersion}")
+    implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
     implementation("software.amazon.awssdk:s3")
     implementation("io.micronaut:micronaut-http-client")
+
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.slf4j:jcl-over-slf4j:1.7.28")
 }
 
 application {
-    mainClass.set("micronaut.example.Application")
+    mainClass.set("example.micronaut.Application")
 }
 
 java {
-    sourceCompatibility = JavaVersion.toVersion("11")
-    targetCompatibility = JavaVersion.toVersion("11")
+    sourceCompatibility = JavaVersion.toVersion("8")
+    targetCompatibility = JavaVersion.toVersion("8")
 }
-
-
-

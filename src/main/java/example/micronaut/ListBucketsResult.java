@@ -13,39 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package micronaut.example;
+package example.micronaut;
 
 import io.micronaut.core.annotation.Introspected;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @Introspected
-public class Result {
+public class ListBucketsResult extends Result{
 
-    private final String requestId;
+    private List<String> buckets;
 
-    @NotNull
-    @NotBlank
-    private final String status;
-
-    private final String message;
-
-    public Result(String requestId, @NotNull @NotBlank String status, String message) {
-        this.requestId = requestId;
-        this.status = status;
-        this.message = message;
+    public ListBucketsResult(String requestId, @NotNull @NotBlank String status, List<String> buckets) {
+        super(requestId, status, null);
+        this.buckets = buckets;
     }
 
-    public String getMessage() {
-        return message;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public String getRequestId() {
-        return requestId;
+    public List<String> getBuckets() {
+        return buckets;
     }
 }
