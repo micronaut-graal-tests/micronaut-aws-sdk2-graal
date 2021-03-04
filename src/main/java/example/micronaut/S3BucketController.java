@@ -17,6 +17,7 @@ package example.micronaut;
 
 import io.micronaut.context.annotation.Parameter;
 import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import software.amazon.awssdk.core.exception.SdkException;
@@ -26,6 +27,8 @@ import software.amazon.awssdk.services.s3.model.Bucket;
 import software.amazon.awssdk.services.s3.model.CreateBucketConfiguration;
 import software.amazon.awssdk.services.s3.model.CreateBucketRequest;
 import software.amazon.awssdk.services.s3.model.CreateBucketResponse;
+import software.amazon.awssdk.services.s3.model.DeleteBucketRequest;
+import software.amazon.awssdk.services.s3.model.DeleteBucketResponse;
 import software.amazon.awssdk.services.s3.model.ListBucketsResponse;
 import software.amazon.awssdk.services.s3.model.S3Exception;
 
@@ -44,7 +47,7 @@ public class S3BucketController {
     }
 
     @Post("/{bucketName}")
-    public Result createBucket(@Parameter String bucketName) {
+    public Result createBucket(String bucketName) {
         try {
             CreateBucketRequest createBucketRequest = CreateBucketRequest.builder()
                     .bucket(bucketName)
@@ -77,6 +80,26 @@ public class S3BucketController {
             return new ListBucketsResult(s3Exception.requestId(), String.valueOf(s3Exception.statusCode()), null);
         } catch (SdkException sdkException) {
             return new ListBucketsResult("N/A", sdkException.getMessage(), null);
+        }
+    }
+
+    @Delete("/{bucketName}")
+    public Result deleteBucket(String bucketName) {
+        try {
+            DeleteBucketRequest deleteBucketRequest = DeleteBucketRequest.builder()
+                    .bucket(bucketName)
+                    .build();
+
+            DeleteBucketResponse response = s3Client.deleteBucket(deleteBucketRequest);
+
+            return new Result(response.responseMetadata().requestId(),
+                    String.valueOf(response.sdkHttpResponse().statusCode()),
+                    null
+            );
+        } catch (S3Exception s3Exception) {
+            return new Result(s3Exception.requestId(), String.valueOf(s3Exception.statusCode()), s3Exception.getMessage());
+        } catch (SdkException sdkException) {
+            return new Result("N/A", sdkException.getMessage(), sdkException.getLocalizedMessage());
         }
     }
 }

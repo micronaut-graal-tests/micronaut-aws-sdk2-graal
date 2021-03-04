@@ -11,4 +11,5 @@ To test the application:
 ```
 curl -X POST localhost:8080/s3/buckets/someuniquebucketname
 curl -X GET localhost:8080/s3/buckets
+curl -X DELETE localhost:8080/s3/buckets/someuniquebucketname
 ```
