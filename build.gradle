@@ -20,13 +20,26 @@ micronaut {
     }
 }
 
+configurations {
+    all {
+        resolutionStrategy {
+            eachDependency { DependencyResolveDetails details ->
+                if (details.requested.group == 'io.micronaut.aws') {
+                    details.useVersion micronautAwsVersion
+                }
+            }
+        }
+    }
+}
+
 dependencies {
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut:micronaut-runtime")
     implementation("javax.annotation:javax.annotation-api")
-    implementation("io.micronaut.aws:micronaut-aws-sdk-v2:${micronautAwsVersion}")
+    implementation("io.micronaut.aws:micronaut-aws-sdk-v2")
     implementation("software.amazon.awssdk:s3")
     implementation("io.micronaut:micronaut-http-client")
+
     runtimeOnly("ch.qos.logback:logback-classic")
     runtimeOnly("org.slf4j:jcl-over-slf4j:1.7.28")
 }
