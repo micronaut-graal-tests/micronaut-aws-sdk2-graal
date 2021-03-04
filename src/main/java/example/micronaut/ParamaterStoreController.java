@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package micronaut.example;
+package example.micronaut;
 
 import io.micronaut.core.annotation.ReflectiveAccess;
 import io.micronaut.http.MediaType;
