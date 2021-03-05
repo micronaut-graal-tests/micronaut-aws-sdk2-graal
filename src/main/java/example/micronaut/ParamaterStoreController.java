@@ -15,26 +15,29 @@
  */
 package example.micronaut;
 
-import io.micronaut.core.annotation.ReflectiveAccess;
-import io.micronaut.http.MediaType;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
 import software.amazon.awssdk.core.exception.SdkException;
 import software.amazon.awssdk.services.ssm.SsmClient;
-import software.amazon.awssdk.services.ssm.model.*;
+import software.amazon.awssdk.services.ssm.model.GetParametersByPathRequest;
+import software.amazon.awssdk.services.ssm.model.GetParametersByPathResponse;
+import software.amazon.awssdk.services.ssm.model.PutParameterRequest;
+import software.amazon.awssdk.services.ssm.model.PutParameterResponse;
+import software.amazon.awssdk.services.ssm.model.SsmException;
 
-import javax.inject.Inject;
 import javax.validation.Valid;
 import java.util.stream.Collectors;
 
-@Controller(value = "/paramStore", produces = MediaType.APPLICATION_JSON)
+@Controller(value = "/paramStore")
 public class ParamaterStoreController {
 
-    @ReflectiveAccess
-    @Inject
-    private SsmClient ssmClient;
+    private final SsmClient ssmClient;
+
+    public ParamaterStoreController(SsmClient ssmClient) {
+        this.ssmClient = ssmClient;
+    }
 
     @Post(value = "/")
     public Result createBucket(@Valid @Body Parameter parameter) {
