@@ -4,7 +4,7 @@ Test application for Micronaut AWS SDKv2 and GraalVM that uses S3 client.
 
 To test the application:
 
-1. Build application `./gradlew nativeImage`
+1. Build application `./build-native-image.sh`
 2. Setup AWS credentials
 3. Call api:
 
