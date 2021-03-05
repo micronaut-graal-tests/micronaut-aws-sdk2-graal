@@ -52,3 +52,8 @@ java {
     sourceCompatibility = JavaVersion.toVersion("8")
     targetCompatibility = JavaVersion.toVersion("8")
 }
+
+nativeImage {
+    imageName("aws-paramstore")
+    args = ["-H:+StaticExecutableWithDynamicLibC"]
+}
