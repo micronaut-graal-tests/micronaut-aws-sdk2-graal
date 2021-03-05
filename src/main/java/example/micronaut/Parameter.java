@@ -1,5 +1,6 @@
 package example.micronaut;
 
+import io.micronaut.core.annotation.Creator;
 import io.micronaut.core.annotation.Introspected;
 import io.micronaut.core.annotation.NonNull;
 
@@ -20,6 +21,7 @@ public class Parameter {
     @NotBlank
     private String value;
 
+    @Creator
     public Parameter(@NonNull @NotBlank String name, @NonNull @NotBlank String type, @NonNull @NotBlank String value) {
         this.name = name;
         this.type = type;

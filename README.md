@@ -10,5 +10,6 @@ To test the application:
 
 ```
 curl -X POST -H "Content-Type: application/json"  -d '{"name":"/foo/bar", "type":"String", "value":"micronaut"}' http://localhost:8080/paramStore/
-curl -X GET localhost:8080/paramStore/foo
+curl -X GET localhost:8080/paramStore/foo/bar
+curl -X DELETE localhost:8080/paramStore/foo/bar
 ```
