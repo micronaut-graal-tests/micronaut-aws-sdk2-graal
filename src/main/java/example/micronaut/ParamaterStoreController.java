@@ -15,6 +15,7 @@
  */
 package example.micronaut;
 
+import io.micronaut.core.annotation.Nullable;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Delete;
@@ -62,7 +63,7 @@ public class ParamaterStoreController {
     }
 
     @Get("/{/paramPath:.*}")
-    public ListParamsResult listParameters(String paramPath) {
+    public ListParamsResult listParameters(@Nullable String paramPath) {
         try {
             GetParametersByPathResponse parametersByPath = ssmClient.getParametersByPath(GetParametersByPathRequest.builder()
                     .path("/" + paramPath)
@@ -82,7 +83,7 @@ public class ParamaterStoreController {
     }
 
     @Delete("/{/paramPath:.*}")
-    public Result deleteParameter(String paramPath) {
+    public Result deleteParameter(@Nullable String paramPath) {
         try {
             DeleteParameterRequest deleteParameterRequest = DeleteParameterRequest.builder()
                     .name("/" + paramPath)
