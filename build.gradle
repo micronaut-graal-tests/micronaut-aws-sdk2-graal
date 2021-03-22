@@ -55,5 +55,4 @@ java {
 
 nativeImage {
     imageName("aws-paramstore")
-    args = ["-H:+StaticExecutableWithDynamicLibC"]
 }
