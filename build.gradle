@@ -55,5 +55,4 @@ java {
 
 nativeImage {
     imageName("aws-s3")
-    args = ["-H:+StaticExecutableWithDynamicLibC"]
 }
