@@ -20,18 +20,6 @@ micronaut {
     }
 }
 
-configurations {
-    all {
-        resolutionStrategy {
-            eachDependency { DependencyResolveDetails details ->
-                if (details.requested.group == 'io.micronaut.aws') {
-                    details.useVersion micronautAwsVersion
-                }
-            }
-        }
-    }
-}
-
 dependencies {
     implementation("io.micronaut:micronaut-validation")
     implementation("io.micronaut:micronaut-runtime")
