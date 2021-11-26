@@ -1,3 +1,3 @@
 #!/bin/bash
-./gradlew nativeImage
-cp build/native-image/aws-s3 .
+./gradlew nativeCompile
+cp build/native/nativeCompile/aws-s3 .
