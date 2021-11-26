@@ -1,3 +1,3 @@
 #!/bin/bash
-./gradlew nativeImage
-cp build/native-image/aws-paramstore .
+./gradlew nativeCompile
+cp build/native/nativeCompile/aws-paramstore .
